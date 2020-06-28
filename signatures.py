@@ -16,9 +16,20 @@ def order_signature(range_):
     '''
     pages = deque(range_)
 
+    switch = False
+
     while len(pages) > 0:
-        yield pages.popleft()
-        yield pages.pop()
+        left = pages.popleft()
+        right = pages.pop()
+
+        if switch:
+            yield right
+            yield left
+        else:
+            yield left
+            yield right
+
+        switch = not switch
 
 
 def order_document(num_pages, sheets_per_signature=DEFAULT_SHEETS_PER_SIGNATURE):
